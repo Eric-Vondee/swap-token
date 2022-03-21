@@ -26,7 +26,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
     polygon: {
-      url: process.env.POLYGON_URL || "",
+      url: process.env.POLYGON_MAINNET_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
