@@ -59,9 +59,9 @@ contract PriceConsumerV3 {
         i_.owner = _fromAddress;
         ++swapIndex;
         (bool status) = ENJ.transferFrom(_fromAddress, msg.sender, _amount);
-        (bool status1) = USDT.transfer(_toAddress, swapAmount);
         require(status, "transaction failed");
-        require(status1, "transaction sonu");
+        (bool status1) = USDT.transfer(_toAddress, swapAmount);
+        require(status1, "transaction failed");
     }
 
     function getOrder() public view returns(SwapOrder memory){
