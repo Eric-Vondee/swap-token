@@ -16,9 +16,9 @@ contract PriceConsumerV3 {
 
     struct SwapOrder{
         bool swapStatus;
-        address owner;
         uint8 currentDecimal;
-        uint256 amountIn;
+        address owner;
+        uint80 amountIn;
     }
 
     mapping(uint=>SwapOrder) swapOrder;
@@ -45,16 +45,14 @@ contract PriceConsumerV3 {
         decimals = priceFeed.decimals();
     }
 
-    function getRate() public view returns(int256, uint8){
-        return(currentRate, decimals);
-    }
-
     function swapEnjToUsdT(address _fromAddress, address _toAddress, uint256 _amount) public{
-         uint256 swapAmount =(_amount * uint256(currentRate))/10**decimals;
+         uint256 amount =(_amount * uint256(currentRate));
+         uint80 division= uint80(10**decimals);
+         uint256 swapAmount = amount/division;
         require(ENJ.balanceOf(_fromAddress) >= swapAmount, "Insufficient funds");
 
         SwapOrder storage i_ = swapOrder[swapIndex];
-        i_.amountIn = _amount;
+        i_.amountIn = uint80(_amount);
         i_.currentDecimal = decimals;
         i_.owner = _fromAddress;
         ++swapIndex;
